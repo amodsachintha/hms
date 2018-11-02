@@ -24,155 +24,244 @@
     <script type="text/javascript" src="{{asset('datatables/datatables.min.js')}}"></script>
 
     {{--Font Awesome--}}
-    <link rel="stylesheet" href="{{asset('fa/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('fa/css/all.css')}}">
 
     <link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
+
+    <script src="{{ asset('js/feather.min.js') }}"></script>
+
+    <link rel="stylesheet" href="{{asset('css/sticky-footer.css')}}">
 
 
 </head>
 <body style="background-color: white">
 <div id="app">
-    <nav class="navbar navbar-dark fixed-top  bg-dark p-0 flex-md-nowrap shadow">
-        <div class="container">
+    <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-bold"><a class="navbar-brand text-dark" href="/">{{ config('app.name', 'Laravel') }}</a></h5>
+        <nav class="my-2 my-md-0 mr-md-3">
 
-    <a class="navbar-brand" href="{{ url('/') }}">
-        {{ config('app.name', 'Laravel') }}
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="{{ __('Toggle navigation') }}">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Left Side Of Navbar -->
-        <ul class="navbar-nav mr-auto">
-
-        </ul>
-
-        <!-- Right Side Of Navbar -->
-        <ul class="navbar-nav ml-auto">
-            <!-- Authentication Links -->
             @guest
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li>
-                <li class="nav-item">
-                    @if (Route::has('register'))
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    @endif
-                </li>
+                <a class="p-2 text-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
             @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
+                <a class="p-2 text-dark" href="{{route('user.profile')}}">{{ Auth::user()->name }}</a>
+                <a class="p-2 text-dark" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
             @endguest
-        </ul>
-    </div>
-</div>
-</nav>
-
-<div class="container-fluid pt-4">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <span data-feather="home"></span>
-                            Dashboard <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file"></span>
-                            Orders
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="shopping-cart"></span>
-                            Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="users"></span>
-                            Customers
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-align-justify"></i>
-                            Reports
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="layers"></span>
-                            Integrations
-                        </a>
-                    </li>
-                </ul>
-
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Saved reports</span>
-                    <a class="d-flex align-items-center text-muted" href="#">
-                        <span data-feather="plus-circle"></span>
-                    </a>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text"></span>
-                            Current month
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text"></span>
-                            Last quarter
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text"></span>
-                            Social engagement
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text"></span>
-                            Year-end sale
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </nav>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                @yield('content')
-            </div>
-        </main>
-
     </div>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
+    <div class="container-fluid pt-4">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active font-weight-bold hv" href="#">
+                                <i class="far fa-tachometer-alt"></i>
+                                Dashboard <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseDepartment" aria-expanded="false" aria-controls="collapseDepartment">
+                                <i class="far fa-building"></i>
+                                Department
+                            </a>
+                            <div class="collapse ml-2" id="collapseDepartment">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Department</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Department List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseDoctor" aria-expanded="false" aria-controls="collapseDoctor">
+                                <i class="far fa-user-md"></i>
+                                Doctor
+                            </a>
+                            <div class="collapse ml-2" id="collapseDoctor">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Doctor</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Doctor List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapsePatient" aria-expanded="false" aria-controls="collapsePatient">
+                                <i class="far fa-wheelchair"></i>
+                                Patient
+                            </a>
+                            <div class="collapse ml-2" id="collapsePatient">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Patient</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Patient List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Add Document</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Document List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseAppointment" aria-expanded="false" aria-controls="collapseAppointment">
+                                <i class="far fa-clock"></i>
+                                Appointment
+                            </a>
+                            <div class="collapse ml-2" id="collapseAppointment">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Appointment</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Appointment List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseAccountMgr" aria-expanded="false" aria-controls="collapseAccountMgr">
+                                <i class="fal fa-usd-circle"></i>
+                                Account Manager
+                            </a>
+                            <div class="collapse ml-2" id="collapseAccountMgr">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Account</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Account List</a></li>
+
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Debit Report</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Credit Report</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                <i class="fal fa-users"></i>
+                                Human Resources
+                            </a>
+                            <div class="collapse ml-2" id="collapseHR">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Employee</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Accountant List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Case Manager List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Laboratorist List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Nurse List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Pharmacist List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Receptionist List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseBedMgr" aria-expanded="false" aria-controls="collapseBedMgr">
+                                <i class="fal fa-bed"></i>
+                                Bed Manager
+                            </a>
+                            <div class="collapse ml-2" id="collapseBedMgr">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Bed</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Bed List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Bed Assign</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Bed Assign List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseNoticeboard" aria-expanded="false" aria-controls="collapseNoticeboard">
+                                <i class="fal fa-bell"></i>
+                                Noticeboard
+                            </a>
+                            <div class="collapse ml-2" id="collapseNoticeboard">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Notice</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Notice List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseCaseMgr" aria-expanded="false" aria-controls="collapseCaseMgr">
+                                <i class="fal fa-medkit"></i>
+                                Case Manager
+                            </a>
+                            <div class="collapse ml-2" id="collapseCaseMgr">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Notice</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Notice List</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseHospitalActs" aria-expanded="false" aria-controls="collapseHospitalActs">
+                                <i class="fal fa-clipboard"></i>
+                                Hospital Activities
+                            </a>
+                            <div class="collapse ml-2" id="collapseHospitalActs">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Birth Report</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Add Death Report</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Add Operation Report</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Add Investigation Report</a></li>
+
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">List Birth Reports</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">List Death Reports</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">List Operation Reports</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">List Investigation Reports</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapsePharmacyMgr" aria-expanded="false" aria-controls="collapsePharmacyMgr">
+                                <i class="far fa-hospital"></i>
+                                Pharmacy Manager
+                            </a>
+                            <div class="collapse ml-2" id="collapsePharmacyMgr">
+                                <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Drug</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">List Drugs</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Add Drug Category</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">List Drug Categories</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item" style="margin-bottom: 40px">
+                            <p class="font-weight-bold"></p>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                    @yield('content')
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <script>
+        feather.replace()
+    </script>
 </div>
 
-<script src="{{ asset('fa/js/all.min.js') }}"></script>
+<footer class="footer">
+    <div class="container text-center">
+        <span class="text-muted small">&copy; amodsachintha {{date('Y')}}</span>
+    </div>
+</footer>
+
 
 </body>
 </html>

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md">
-                <table id="example" class="dataTable table table-striped table-bordered" style="width:100%">
+                <table id="employees" class="dataTable table table-striped table-bordered" style="width:100%">
                     <thead>
                     <tr>
                         <th>Name</th>
@@ -161,36 +161,31 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            var table = $('#example').DataTable({
+        $(document).ready(function () {
+            var table = $('#employees').DataTable({
                 responsive: true,
                 dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 buttons: [
                     {
-                        extend:    'copyHtml5',
-                        text:      '<i class="far fa-clone"></i>',
+                        extend: 'copyHtml5',
+                        text: '<i class="fal fa-clone"></i>',
                         titleAttr: 'Copy'
                     },
                     {
-                        extend:    'excelHtml5',
-                        text:      '<i class="fas fa-file-excel"></i>',
+                        extend: 'excelHtml5',
+                        text: '<i class="fal fa-file-excel"></i>',
                         titleAttr: 'Excel'
                     },
                     {
-                        extend:    'csvHtml5',
-                        text:      '<i class="fas fa-file-csv"></i>',
-                        titleAttr: 'CSV'
-                    },
-                    {
-                        extend:    'pdfHtml5',
-                        text:      '<i class="far fa-file-pdf"></i>',
+                        extend: 'pdfHtml5',
+                        text: '<i class="fal fa-file-pdf"></i>',
                         titleAttr: 'PDF'
                     }
                 ]
             });
             table.buttons().container()
-                .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-        } );
+                .appendTo('#employees_wrapper .col-md-6:eq(0)');
+        });
     </script>
 @endsection
