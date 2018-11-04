@@ -17,7 +17,7 @@ class CreatePurchaseItemsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('drug_id');
             $table->unsignedInteger('purchase_id');
-            $table->integer('quantity');
+            $table->double('quantity');
             $table->double('unit_price');
             $table->double('price');
             $table->timestamps();

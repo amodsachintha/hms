@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderItemsTable extends Migration
+class CreateInvPurchaseItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('inv_purchase_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('order_id');
-            $table->unsignedInteger('drug_id');
+            $table->unsignedInteger('item_id');
+            $table->unsignedInteger('purchase_id');
             $table->double('quantity');
             $table->double('unit_price');
-            $table->double('sub_total');
+            $table->double('price');
             $table->timestamps();
 
             $table->engine = 'InnoDB';
-            $table->foreign('order_id')->references('id')->on('orders');
-            $table->foreign('drug_id')->references('id')->on('drugs');
-
+            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('purchase_id')->references('id')->on('inv_purchases');
         });
     }
 
@@ -36,6 +35,6 @@ class CreateOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('inv_purchase_items');
     }
 }

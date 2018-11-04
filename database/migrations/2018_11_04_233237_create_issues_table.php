@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchasesTable extends Migration
+class CreateIssuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,21 @@ class CreatePurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('issues', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('supplier_id');
-            $table->string('invoice_no');
-            $table->double('amount');
-            $table->date('date');
+            $table->unsignedInteger('item_id');
+            $table->unsignedInteger('uom_id');
+            $table->string('to')->nullable();
+            $table->double('quantity');
+            $table->dateTime('date');
             $table->timestamps();
 
             $table->engine = 'InnoDB';
-            $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('uom_id')->references('id')->on('uoms');
         });
-
     }
 
     /**
@@ -36,6 +37,6 @@ class CreatePurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('issues');
     }
 }
