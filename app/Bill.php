@@ -12,7 +12,9 @@ class Bill extends Model
     ];
 
     protected $table = 'bills';
-
+    protected $primaryKey = 'id';
+    protected $keyType='string';
+    public $incrementing = false;
 
     public function admission(){
         return $this->hasOne('App\Admission');

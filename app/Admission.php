@@ -12,8 +12,9 @@ class Admission extends Model
     ];
 
     protected $table = 'admissions';
-
-
+    protected $primaryKey = 'id';
+    protected $keyType='string';
+    public $incrementing = false;
 
     public function bill(){
         return $this->belongsTo('App\Bill');

@@ -19,6 +19,11 @@ class Patient extends Model
         'active',
     ];
 
+    protected $table = 'patients';
+    protected $primaryKey = 'id';
+    protected $keyType='string';
+    public $incrementing = false;
+
 
     public function patientReports(){
         return $this->hasMany('App\PatientReport');

@@ -13,6 +13,11 @@ class Doctor extends Model
         'gender', 'nic', 'fee', 'active',
     ];
 
+    protected $table = 'doctors';
+    protected $primaryKey = 'id';
+    protected $keyType='string';
+    public $incrementing = false;
+
     public function specialization(){
         return $this->belongsTo('App\Specialization');
     }
