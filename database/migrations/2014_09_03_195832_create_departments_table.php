@@ -18,6 +18,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->double('ot_rate')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
 
             $table->engine = "InnoDB";

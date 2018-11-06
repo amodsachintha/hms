@@ -23,7 +23,7 @@ class CreateInvPurchasesTable extends Migration
             $table->timestamps();
 
             $table->engine = 'InnoDB';
-            $table->foreign('supplier_id')->references('id')->on('suppliers');
+            $table->foreign('supplier_id')->references('id')->on('inv_suppliers');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

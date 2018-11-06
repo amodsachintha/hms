@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('uom_id');
             $table->integer('qoh')->default(0);
+            $table->dateTime('best_before');
             $table->integer('stock_medium');
             $table->integer('stock_low');
             $table->string('description')->nullable();

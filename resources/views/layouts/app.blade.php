@@ -32,6 +32,9 @@
 
     <link rel="stylesheet" href="{{asset('css/sticky-footer.css')}}">
 
+    {{--formio--}}
+    <link rel="stylesheet" href="{{asset('formio/formio.full.min.css')}}">
+    <script src="{{asset('formio/formio.full.min.js')}}"></script>
 
 </head>
 <body style="background-color: white">
@@ -53,33 +56,33 @@
         @csrf
     </form>
 
-    <div class="container-fluid pt-4">
+    <div class="container-fluid pt-0">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active font-weight-bold hv" href="#">
+                            <a class="nav-link {{ Request::is('*dashboard*') ? 'active' : '' }} font-weight-bold hv" href="#">
                                 <i class="far fa-tachometer-alt"></i>
                                 Dashboard <span class="sr-only">(current)</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseDepartment" aria-expanded="false" aria-controls="collapseDepartment">
+                            <a class="nav-link font-weight-bold hv {{ Request::is('*department*') ? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#collapseDepartment" aria-expanded="false" aria-controls="collapseDepartment">
                                 <i class="far fa-building"></i>
                                 Department
                             </a>
                             <div class="collapse ml-2" id="collapseDepartment">
                                 <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
-                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Department</a></li>
-                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Department List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="{{route('department.create.show')}}">Add Department</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="{{route('department.list')}}">Department List</a></li>
                                 </ul>
                             </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseDoctor" aria-expanded="false" aria-controls="collapseDoctor">
+                            <a class="nav-link font-weight-bold hv {{ Request::is('*doctor*') ? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#collapseDoctor" aria-expanded="false" aria-controls="collapseDoctor">
                                 <i class="far fa-user-md"></i>
                                 Doctor
                             </a>
@@ -93,7 +96,7 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapsePatient" aria-expanded="false" aria-controls="collapsePatient">
+                            <a class="nav-link font-weight-bold hv {{ Request::is('*patient*') ? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#collapsePatient" aria-expanded="false" aria-controls="collapsePatient">
                                 <i class="far fa-wheelchair"></i>
                                 Patient
                             </a>
@@ -109,7 +112,7 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold hv" href="#" data-toggle="collapse" data-target="#collapseAppointment" aria-expanded="false" aria-controls="collapseAppointment">
+                            <a class="nav-link font-weight-bold hv {{ Request::is('*department*') ? 'appointment' : '' }}" href="#" data-toggle="collapse" data-target="#collapseAppointment" aria-expanded="false" aria-controls="collapseAppointment">
                                 <i class="far fa-clock"></i>
                                 Appointment
                             </a>
@@ -242,8 +245,9 @@
                 </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-0">
+                @yield('header')
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ml-2">
                     @yield('content')
                 </div>
             </main>

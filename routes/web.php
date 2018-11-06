@@ -25,8 +25,12 @@ Route::get('/test',function (){
 
 
 //Department
+Route::get('/department/list','DepartmentController@index')->name('department.list');
+
 Route::get('/department/create','DepartmentController@showCreate')->name('department.create.show');
-Route::post('/department/create','DepartmentController@create')->name('department.create.new');
-Route::get('/department/update/{id}','DepartmentController@showUpdate')->name('department.update');
+Route::post('/department/create','DepartmentController@create')->name('department.create');
+
+Route::get('/department/update/{id}','DepartmentController@showUpdate')->name('department.update.show');
+Route::post('/department/update/{id}','DepartmentController@update')->name('department.update');
+
 Route::get('department/delete/{id}','DepartmentController@delete')->name('department.delete');
-Route::get('/department/list','DepartmentController@showList')->name('department.list');

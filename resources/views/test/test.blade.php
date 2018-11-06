@@ -2,6 +2,9 @@
 @section('content')
 
     <div class="container">
+
+
+
         <div class="row">
             <div class="col-md">
                 <table id="employees" class="dataTable table table-striped table-bordered" style="width:100%">
