@@ -26,23 +26,37 @@ class DepartmentController extends Controller
 
     public function create(Request $request)
     {
+        $id = $request->get('id');
         $rules = [
-            'name' => 'alpha|required',
-            'description' => 'alpha|required',
-            'ot_rate' => 'numeric|required',
+            'name' => 'required',
+            'description' => 'required',
         ];
-        $check = Validator::make($request->except(['_token']), $rules);
-
+        $check = Validator::make($request->all(), $rules);
         if ($check->fails()) {
-            return response()->json(['err' => $check->errors()->all()]);
+            return back()->with(['err' => $check->errors()->all()]);
+        }
+
+        if (!is_null($id)) {
+            try {
+                $dept = Department::findOrFail(intval($id));
+
+                if (Department::where('name', $dept->name)->count() != 0) {
+                    return back()->with(['err' => 'Department already exists!']);
+                }
+                $dept->fill($request->except(['id']));
+                $dept->save();
+                return back()->with(['msg' => 'Update successful.']);
+            } catch (\Exception $e) {
+                return back()->with(['err' => 'Update failed.<br><code>' . $e->getMessage() . '</code>']);
+            }
         }
 
         if (Department::where('name', $request->get('name'))->count() != 0) {
-            return response()->json(['err' => 'Department already exists!']);
+            return back()->with(['err' => 'Department already exists!']);
         } else {
             $department = new Department($request->all());
             $department->save();
-            return response()->json(['err' => false]);
+            return back()->with(['msg' => 'Department added successfully.']);
         }
 
     }
@@ -55,7 +69,7 @@ class DepartmentController extends Controller
             $dept->save();
             return back()->with(['msg' => $dept->name . ' deleted!']);
         } catch (\Exception $e) {
-            return back()->with(['msg' => 'Department not found!']);
+            return back()->with(['err' => 'Department not found!']);
         }
     }
 
@@ -65,35 +79,9 @@ class DepartmentController extends Controller
             $dept = Department::findOrFail(intval($id));
             return view('pages.department.create', ['department' => $dept]);
         } catch (\Exception $e) {
-            return back()->with(['msg' => 'Department not found!']);
+            return back()->with(['err' => 'Department not found!']);
         }
-
 
     }
-
-    public function update(Request $request, $id)
-    {
-        $rules = [
-            'name' => 'alpha|required',
-            'description' => 'alpha|required',
-            'ot_rate' => 'numeric|required',
-        ];
-        $check = Validator::make($request->except(['_token']), $rules);
-        if ($check->fails()) {
-            return back()->with(['msg' => '<strong>Error</strong> validating changes!','err'=>true]);
-        }
-
-        try {
-            $dept = Department::findOrFail(intval($id));
-            $dept->fill($request->all());
-            $dept->save();
-            return back()->with(['msg' => 'Changes saved successfully!','err'=>false]);
-        }catch (\Exception $e){
-            return back()->with(['msg' => '<strong>Error</strong> saving changes!', 'err'=>true]);
-        }
-
-
-    }
-
 
 }

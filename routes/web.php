@@ -26,11 +26,14 @@ Route::get('/test',function (){
 
 //Department
 Route::get('/department/list','DepartmentController@index')->name('department.list');
-
 Route::get('/department/create','DepartmentController@showCreate')->name('department.create.show');
 Route::post('/department/create','DepartmentController@create')->name('department.create');
-
 Route::get('/department/update/{id}','DepartmentController@showUpdate')->name('department.update.show');
-Route::post('/department/update/{id}','DepartmentController@update')->name('department.update');
+Route::get('/department/delete/{id}','DepartmentController@delete')->name('department.delete');
 
-Route::get('department/delete/{id}','DepartmentController@delete')->name('department.delete');
+//Doctor
+Route::get('/doctor/list','DoctorController@index')->name('doctor.list');
+Route::get('/doctor/create','DoctorController@showCreate')->name('doctor.create.show');
+Route::post('/doctor/create','DoctorController@create')->name('doctor.create');
+Route::get('/doctor/update/{id}','DoctorController@showUpdate')->name('doctor.update.show');
+Route::get('/doctor/delete/{id}','DoctorController@delete')->name('doctor.delete');

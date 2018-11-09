@@ -17,6 +17,7 @@ class CreateSpecializationsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

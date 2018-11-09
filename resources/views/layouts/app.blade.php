@@ -88,8 +88,8 @@
                             </a>
                             <div class="collapse ml-2" id="collapseDoctor">
                                 <ul class="list-group bg-transparent" style="margin-right: 10px; margin-left: 10px">
-                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="#">Add Doctor</a></li>
-                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="#">Doctor List</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark btn-link" href="{{route('doctor.create.show')}}">Add Doctor</a></li>
+                                    <li class="list-group-item small p-2"><a class="text-dark nav-item" href="{{route('doctor.list')}}">Doctor List</a></li>
                                 </ul>
                             </div>
                         </li>
